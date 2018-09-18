@@ -1,0 +1,13 @@
+<?php if (!$block->isContentMode() || $block->isMixedMode()): ?>
+  <div class="tagalys-namespace" id="tagalys-namespace">
+    
+  </div>
+
+  <script type="text/javascript">
+      require(['jquery'],function(jQuery){
+          jQuery(document).on('tagalys:ready', function() {
+              jQuery('#tagalys-namespace').tagalys_mpage({ name: '__categories-<?php echo $block->getCurrentCategory()->getId() ?>', platform: true });
+          });
+      });
+  </script>
+<?php endif; ?>
