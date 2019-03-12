@@ -2,7 +2,7 @@
   "name": "tagalys/tagalys-magento2-component-categories",
   "description": "Integrates Tagalys Categories API",
   "type": "magento2-module",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
@@ -14,8 +14,8 @@
       }
   ],
   "require": {
-    "tagalys/tagalys-magento2-component-sync": "1.3.0",
-    "tagalys/tagalys-magento2-component-analytics": "1.3.0"
+    "tagalys/tagalys-magento2-component-sync": "1.4.0",
+    "tagalys/tagalys-magento2-component-analytics": "1.4.0"
   },
   "authors": [
     {
