@@ -25,6 +25,23 @@
             }
             // category is selected for Tagalys and display mode has products
             try {
+                try {
+                    $tagalysMpages = $this->_objectManager->get('\Tagalys\Mpages\Helper\Mpages');
+                    $response = $tagalysMpages->getMpageData($this->_storeManager->getStore()->getId().'', 1, '__categories-'.$categoryId);
+                    if ($response !== false) {
+                        if (isset($response['total'])) {
+                            $this->_coreRegistry->register('mpageTotalProducts', intval($response['total']));
+                        }
+                        if (isset($response['name'])) {
+                            $this->_coreRegistry->register('mpageName', $response['name']);
+                        }
+                    }
+                } catch (Exception $e) {
+                    // cannot find Tagalys mpagecache entry. don't set variables.
+                }
+
+                $this->_coreRegistry->register('tagalysPowered', true);
+
                 $magentoVersion = $this->_objectManager->get('Magento\Framework\App\ProductMetadataInterface')->getVersion();
                 $magentoVersionComponents = explode('.', $magentoVersion);
                 $minorVersion = intval($magentoVersionComponents[1]);
