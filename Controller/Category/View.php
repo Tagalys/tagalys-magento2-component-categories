@@ -5,13 +5,22 @@
     {
         public function execute()
         {
-            // if category is not selected in Tagalys configuration, pass
-            $tagalysConfiguration = $this->_objectManager->get('\Tagalys\Sync\Helper\Configuration');
-            $categoryIdsForTagalys = $tagalysConfiguration->getConfig('category_ids', true);
-            $categoryId = (int)$this->getRequest()->getParam('id', false);
-            if ($tagalysConfiguration->getConfig('module:listingpages:enabled') == '0' || !in_array($categoryId, $categoryIdsForTagalys)) {
+            try {
+                $tagalysConfiguration = $this->_objectManager->get('\Tagalys\Sync\Helper\Configuration');
+                if ($tagalysConfiguration->getConfig('listing_pages:categories_via_tagalys_js_enabled') == '1' && $tagalysConfiguration->getConfig('tagalys:health') == '1') {
+                    $categoryId = (int)$this->getRequest()->getParam('id', false);
+                    $storeId = $this->_storeManager->getStore()->getId();
+                    $tagalysCategory = $this->_objectManager->get('\Tagalys\Sync\Helper\Category');
+                    if (!$tagalysCategory->uiPoweredByTagalys($storeId, $categoryId)) {
+                        return parent::execute();
+                    }
+                } else {
+                    return parent::execute();
+                }
+            } catch (Exception $e) {
                 return parent::execute();
             }
+
             // if display mode is cms block only, pass
             try {
                 $category = $this->categoryRepository->get($categoryId, $this->_storeManager->getStore()->getId());
