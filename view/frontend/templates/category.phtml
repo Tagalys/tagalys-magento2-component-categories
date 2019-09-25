@@ -5,6 +5,7 @@
 
   <script type="text/javascript">
       require(['jquery'],function(jQuery){
+          __tagalysRendered = true;
           jQuery(document).on('tagalys:ready', function() {
               jQuery('#tagalys-namespace').tagalys_mpage({ name: '__categories-<?php echo $block->getCurrentCategory()->getId() ?>', platform: true });
           });
